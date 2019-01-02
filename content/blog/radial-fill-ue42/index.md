@@ -11,7 +11,7 @@ Duden flows by their place and supplies it with the necessary regelialia.
 ## This should show up now....
 
 Here's a code snippet.
-```csharp
+```csharp{numberLines:true}
 function test() {
   console.log("notice the blank line before this function?");
 }

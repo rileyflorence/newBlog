@@ -28,7 +28,7 @@ function Bio() {
               }}
             />
             <p>
-              Personal blog by{" "}
+              Written by{" "}
               <a href={`https://mobile.twitter.com/${social.twitter}`}>
                 <strong>{author}</strong>
               </a>
@@ -46,7 +46,7 @@ function Bio() {
 
 const bioQuery = graphql`
   query BioQuery {
-    avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
+    avatar: file(absolutePath: { regex: "/profile-pic.png/" }) {
       childImageSharp {
         fixed(width: 50, height: 50) {
           ...GatsbyImageSharpFixed
