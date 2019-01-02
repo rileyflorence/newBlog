@@ -33,7 +33,7 @@ function Bio() {
                 <strong>{author}</strong>
               </a>
               . Capturing and sharing what I learn for Virtual Reality
-              Development in Unreal and Unity.
+              development in Unreal and Unity.
               <br />
               {` `}
             </p>
