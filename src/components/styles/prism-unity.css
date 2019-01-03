@@ -38,6 +38,7 @@ pre[class*="language-"] {
 :not(pre) > code[class*="language-"] {
   padding: 0.1em;
   border-radius: 0.3em;
+  background: #fee7f4;
 }
 .token.comment,
 .token.prolog,
@@ -138,7 +139,7 @@ pre[class*="language-"] {
   left: 0;
 }
 .linenumWrap .linenum {
-  border-right: 1px solid #6ce26c;
+  border-right: 1px solid #02c29f;
   padding: 0 15px 0 0;
   margin: 0 10px 0 0;
   font-size: 0.875em !important;

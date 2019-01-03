@@ -1,5 +1,5 @@
 ---
-title: Radial Fills in Unreal
+title: Resetting the HMD Position
 date: '2019-01-01'
 ---
 
@@ -20,7 +20,7 @@ function test() {
 
 
 And another
-Here's a code snippet.
+
 
 ```csharp{numberLines:true}
 using System.Collections;

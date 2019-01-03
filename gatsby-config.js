@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `VR Dev Blog`,
+    title: `GameDev.FYI`,
     author: `Riley Florence`,
     description: `Cataloging and sharing what I learn bulding for Virtual Reality in Unreal and Unity.`,
     siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,

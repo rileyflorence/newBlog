@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import { StaticQuery, graphql } from "gatsby";
 import favicon16 from "./favicon16.png";
-import favicon32 from "./favicon16.png";
-import favicon64 from "./favicon16.png";
+import favicon32 from "./favicon32.png";
+import favicon64 from "./favicon64.png";
 
 function SEO({ description, lang, meta, keywords, title }) {
   return (

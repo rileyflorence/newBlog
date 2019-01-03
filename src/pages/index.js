@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 import "../components/styles/prism-unity.css";
+import "../components/styles/styles.css";
 
 import Bio from "../components/Bio";
 import Layout from "../components/Layout";
@@ -29,11 +30,16 @@ class BlogIndex extends React.Component {
                   marginBottom: rhythm(1 / 4)
                 }}
               >
-                <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
+                <Link
+                  style={{ boxShadow: `none`, color: `#393e46` }}
+                  to={node.fields.slug}
+                >
                   {title}
                 </Link>
               </h3>
-              <small>{node.frontmatter.date}</small>
+              <small style={{ color: `#8600ED` }}>
+                {node.frontmatter.date}
+              </small>
               <p dangerouslySetInnerHTML={{ __html: node.excerpt }} />
             </div>
           );
