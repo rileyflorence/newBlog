@@ -1,72 +1,45 @@
 ---
-title: Lerps
-date: '2019-01-01'
+title: Lerp / Blend / Tween
+date: '2019-01-28'
+exampleImage: "./assets/lerp/lerpExample.png"
+tags: unreal, unity
 ---
 
-Far far away, [I'm an inline-style link with title](https://www.google.com "Google's Homepage")
- behind the word mountains, `function test()` far from the countries Vokalia and
-Consonantia,asdfasadfsd there live the blind texts. Separated they live in Bookmarksgrove
-right at the coast of the Semantics, a large language ocean. A small river named
-Duden flows by their place and supplies it with the necessary regelialia.
+Lerps are essentially the Game Dev equivalent of blending, or tweening. Lerp is short for the mathematics term _Linear Interpolation._ It's a great way to blend, or smoothly transition, between two ... things. You can Lerp between just about anything: locations, rotations, vectors, colors, floats, etc.
 
-### This should show up now....
+A lerp is defined by two values and an alpha. The alpha is a number between 0 and 1, where 0 equals the first value, and 1 equals the second value. 0.5 would be a perfect 50/50 blend of the two.
 
-Here's a code snippet.
-```csharp{numberLines:true}
-function test() {
-  console.log("notice the blank line before this function?");
-}
-```
+Here's a visual example:
+![Lerping between two colors](./lerpExample.png)
 
+Let's dive in an see some Lerp examples in Unreal and Unity.
 
-And another
-Here's a code snippet.
+### Unreal Lerp Examples
 
-```csharp{numberLines:true}
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+####Lerping between colors in a material.
+This is a simple example of lerping between two colors. You could set the alpha value up to be a parameter that can be set in gameplay. [Mathew Wadstein has a great video about lerps](https://youtu.be/fckeT6GyvPc) in materials, he shows examples that are more robust, including textures and normal maps.
 
-public class PlayerPlatformerController : PhysicsObject {
+![UE4 Material Color Lerp](./ue4matlerp.gif)
 
-    public float maxSpeed = 7;
-    public float jumpTakeOffSpeed = 7;
+####Opening a Hinged Door with Lerps
+In this example we'll be opening a hinged door when the player enters the overlap zone. There are all sorts of Lerp nodes in UE4, but this example uses the LerpRotator node.
 
-    private SpriteRenderer spriteRenderer;
-    private Animator animator;
+First create a simple Actor blueprint, I named mine BP_Door2. Then you will want to set up your door mesh independent of the rest of the door meshes. It will need to be able to move and everything else stay stationery. I just used a **Cube Static Mesh Component**. I turned off *Generate Overlap Events* on the door mesh, so it wouldn't trigger itself. There are many ways to ignore certain overlapping actors or look for a specific overlapping actor. In this demo I'm doing it quick and dirty. This article is helpful when dealing with [collision filtering](https://www.unrealengine.com/en-US/blog/collision-filtering). You will also need a **Box Collider**, this is what we'll use to tell the door to open and close based off the proximity of the player. Because the Cube's pivot point was in the center I offset it within a **Scene Component** I called "Door Pivot" so it would swing from the side, like a regular hinged door. You can create your mesh with the pivot where you want it in your 3D software, or do it the way I did.
 
-    // Use this for initialization
-    void Awake ()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer> ();
-        animator = GetComponent<Animator> ();
-    }
+![Door Setup](./doorsetup.png)
 
-    protected override void ComputeVelocity()
-    {
-        Vector2 move = Vector2.zero;
+Next set up your event graph like this. You want to trigger the door opening based on an overlap event when an actor enters the trigger volume. You could set this up so it requires a button push or something, but I went with the simplest example possible.
 
-        move.x = Input.GetAxis ("Horizontal");
+![Event Graph](./eventgraph.png)
 
-        if (Input.GetButtonDown ("Jump") && grounded) {
-            velocity.y = jumpTakeOffSpeed;
-        } else if (Input.GetButtonUp ("Jump"))
-        {
-            if (velocity.y > 0) {
-                velocity.y = velocity.y * 0.5f;
-            }
-        }
+Double click the timeline node and create a Float Variable. Insert a keyframe at the beginning and at the end. I shortened the time to 2 seconds. Set the first keyframe value to 0 and the second to 1. In this example it's a linear graph, but you could set up the curve with some easing if you'd prefer the door doesn't open at a constant speed from start to finish. It feels a little mechanic when it's linear.
 
-        bool flipSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < 0.01f));
-        if (flipSprite)
-        {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
-        }
+![Timeline](./timeline.png)
 
-        animator.SetBool ("grounded", grounded);
-        animator.SetFloat ("velocityX", Mathf.Abs (velocity.x) / maxSpeed);
+So this is what's happening: When an actor steps in the box collider, the timeline will start to play. The timeline is generating a float value over time, and sends out that value. That float output connects to the alpha input of the Lerp Rotator node. This will smoothly blend from the first rotation (0,0,0) and the second rotation (0,0,90). When the Actor leaves the trigger volume the timeline will play in reverse from whatever frame it is currently at. That's a much nicer effect than snapping to the end and playing in reverse.
 
-        targetVelocity = move * maxSpeed;
-    }
-}
-```
+<iframe width="630" height="354" src="https://www.youtube.com/embed/xjMNGR8qH_o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+### Unity Lerp Examples
+
+####Lerping between colors
